@@ -1,0 +1,41 @@
+\begin{thebibliography}{1}
+
+\bibitem{guitest}
+Joao C. P.~Faria Ana C. R.~Paiva, Nikolai~Tillmann and Raul F.~A. M.
+\newblock {Modeling and Testing Hierarchical GUIs}, 2015.
+\newblock on-line at: \url{http://web.fe.up.pt/~jpf/research/ASM05.pdf}.
+
+\bibitem{SmartBear}
+Smart Bear.
+\newblock {Smart Bear TestComplete Documentation}, 2015.
+\newblock on-line at: \url{http://support.smartbear.com/articles/testcomplete}.
+
+\bibitem{cppunit}
+Michael Feathers.
+\newblock {CppUnit Cookbook}, 2015.
+\newblock on-line at:
+  \url{http://cppunit.sourceforge.net/doc/cvs/cppunit_cookbook.html/}.
+
+\bibitem{handbook}
+L.G. Hayes.
+\newblock {\em The Automated Testing Handbook}.
+\newblock Software Testing Institute, 2004.
+
+\bibitem{certification}
+ISTQB.
+\newblock {Exam Certification}, 2015.
+\newblock on-line at: \url{http://istqbexamcertification.com/}.
+
+\bibitem{Pekka}
+Pekka Laukkanen.
+\newblock {Data-Driven and Keyword-Driven Test Automation Frameworks}.
+\newblock Master's thesis, Helsinki University of Technology, Helsinki,
+  Finland, 2006.
+
+\bibitem{wiki}
+Wikipedia.
+\newblock {Non-functional testing}, 2015.
+\newblock on-line at:
+  \url{http://en.wikipedia.org/wiki/Non-functional_testing}.
+
+\end{thebibliography}

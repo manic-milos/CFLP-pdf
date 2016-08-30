@@ -1,0 +1,93 @@
+% !TEX encoding = UTF-8 Unicode
+
+\documentclass[a4paper]{article}
+
+\usepackage{color}
+\usepackage{url}
+\usepackage[T2A]{fontenc} % enable Cyrillic fonts
+\usepackage[utf8]{inputenc} % make weird characters work
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{listings}
+\lstset{language=C++,
+    frame=tb, % draw a frame at the top and bottom of the code block
+    tabsize=4, % tab space width
+    showstringspaces=false, % don't mark spaces in strings
+    numbers=left, % display line numbers on the left
+    commentstyle=\color{green}, % comment color
+    keywordstyle=\color{blue}, % keyword color
+    stringstyle=\color{red} % string color
+}
+
+\usepackage[english, serbian]{babel}
+%\usepackage[english, serbianc]{babel} %ukljuciti babel sa ovim opcijama, umesto gornjim, ukoliko se koristi cirilica
+
+\usepackage[unicode]{hyperref}
+\hypersetup{colorlinks, citecolor=green, filecolor=green, linkcolor=blue, urlcolor=blue}
+
+%\newtheorem{primer}{Пример}[section] %ćirilični primer
+\newtheorem{primer}{Primer}[section]
+
+\begin{document}
+
+\title{Hard capacitated k-facility location problem \\ \small{Seminarski rad u okviru kursa\\
+Matematičko programiranje i optimizacija\\ Matematički fakultet}}
+
+\author{
+Student:Miloš Manić 1087/2014\\
+Problem:14\\
+Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
+\date{9.~april 2015.}
+\maketitle
+
+\abstract{
+
+
+}
+
+
+\tableofcontents
+
+\newpage
+
+\section{Problem}
+\subsection{Matematička formulacija problema}
+Capacitated k-facility location problem(CKFL) se može formulisati kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvoreno:
+
+\begin{align}
+min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
+ subject\: to: 
+\quad \sum_{i \in F}x_{ij} = d_j, \forall j \in D,\quad\\
+ \sum_{j \in D}x_{ij} \le s_iy_i, \forall i \in F,\\
+\sum_{i \in F}y_i \le k,\\
+x_{ij} \ge 0, \forall i \in F,\forall j \in D,\\
+y \in \{ 0 , 1 \}, \forall i \in F
+\end{align}
+\subsection{Opis problema}
+
+U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$.
+\begin{itemize}
+\item Svako postrojenje $i \in F$ ima kapacitet $s_i$
+\item Izgradnja postrojenja $i \in F$ košta $f_i$
+\item Svaki klijent $j \in D$ ima potražnju $d_i$
+\item Slanje $x_{ij}$ jedinica robe od postrojenja $i$ do klijenta $j$ košta $c_{ij}x_{ij}$, gde je $c_{ij}$ jedinicna cena proporcionalna rastojanju između $i$ i $j$
+\item Na svakoj potencijalnoj lokaciji $i \in F$ može se izgraditi najviše jedno postrojenje
+\item Bez gubitka opštosti može se smatrati da su cene izgradnje $f_i$, kapaciteti $s_i$, i potražnje $d_j$ celi brojevi
+
+Cilj je opslužiti sve klijente koristeći najviše $k$ postrojenja sa što manjim(minimalnim) troškovima izgradnje postrojenja i dopremanja robe.
+\end{itemize}
+
+\subsection{Primena}
+
+\subsection{Postojeći načini rešavanja}
+
+
+
+
+\addcontentsline{toc}{section}{Literatura}
+\appendix
+\bibliography{seminarski} 
+\bibliographystyle{plain}
+
+
+\end{document}

@@ -1,0 +1,19 @@
+\select@language {serbian}
+\contentsline {section}{\numberline {1}Uvod}{2}{section.1}
+\contentsline {section}{\numberline {2}Stati\IeC {\v c}ko testiranje}{2}{section.2}
+\contentsline {section}{\numberline {3}Dinami\IeC {\v c}ko testiranje}{3}{section.3}
+\contentsline {subsection}{\numberline {3.1}Nefunkcionalno testiranje}{3}{subsection.3.1}
+\contentsline {subsection}{\numberline {3.2}Funkcionalno testiranje}{3}{subsection.3.2}
+\contentsline {section}{\numberline {4}Granularnost testiranja}{4}{section.4}
+\contentsline {subsection}{\numberline {4.1}Podela u odnosu na proces automatizacije}{4}{subsection.4.1}
+\contentsline {subsubsection}{\numberline {4.1.1}Testovi jedinica koda}{4}{subsubsection.4.1.1}
+\contentsline {subsubsection}{\numberline {4.1.2}Testovi Komponenti}{4}{subsubsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.3}Testovi Sistema}{4}{subsubsection.4.1.3}
+\contentsline {subsection}{\numberline {4.2}Prakti\IeC {\v c}ni primer testova jedinica koda na primeru CppUnit}{5}{subsection.4.2}
+\contentsline {subsection}{\numberline {4.3}Testiranje grafi\IeC {\v c}kog interfejsa}{6}{subsection.4.3}
+\contentsline {subsubsection}{\numberline {4.3.1}Konstruisanje kona\IeC {\v c}nog automata za testiranje grafi\IeC {\v c}kog interfejsa}{6}{subsubsection.4.3.1}
+\contentsline {section}{\numberline {5}Prednosti automatskog testiranja u odnosu na ru\IeC {\v c}no}{7}{section.5}
+\contentsline {section}{\numberline {6}Problemi automatskog testiranja}{8}{section.6}
+\contentsline {section}{\numberline {7}Pristupi automatizaciji testiranja}{8}{section.7}
+\contentsline {section}{\numberline {8}Zaklju\IeC {\v c}ak}{9}{section.8}
+\contentsline {section}{Literatura}{9}{section.8}

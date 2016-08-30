@@ -1,0 +1,15 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9) (preloaded format=pdftex 2015.3.20)  13 APR 2015 23:25
+entering extended mode
+**C:/Users/Master/Downloads/seminarski/seminarski.bib
+(C:/Users/Master/Downloads/seminarski/seminarski.bib
+! Undefined control sequence.
+l.14 note = {on-line at: \url
+                             {http://support.smartbear.com/articles/testcomp...
+
+? 
+! Emergency stop.
+l.14 note = {on-line at: \url
+                             {http://support.smartbear.com/articles/testcomp...
+End of file on the terminal!
+
+!  ==> Fatal error occurred, no output PDF file produced!
