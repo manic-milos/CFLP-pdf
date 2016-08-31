@@ -9,6 +9,7 @@
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{listings}
+\usepackage{enumerate}
 \lstset{language=C++,
     frame=tb, % draw a frame at the top and bottom of the code block
     tabsize=4, % tab space width
@@ -66,7 +67,7 @@ y \in \{ 0 , 1 \}, \forall i \in F
 \subsection{Opis problema}
 
 U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$.
-\begin{itemize}
+\begin{enumerate}[a)]
 \item Svako postrojenje $i \in F$ ima kapacitet $s_i$
 \item Izgradnja postrojenja $i \in F$ košta $f_i$
 \item Svaki klijent $j \in D$ ima potražnju $d_i$
@@ -74,14 +75,25 @@ U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lok
 \item Na svakoj potencijalnoj lokaciji $i \in F$ može se izgraditi najviše jedno postrojenje
 \item Bez gubitka opštosti može se smatrati da su cene izgradnje $f_i$, kapaciteti $s_i$, i potražnje $d_j$ celi brojevi
 
+\end{enumerate}
 Cilj je opslužiti sve klijente koristeći najviše $k$ postrojenja sa što manjim(minimalnim) troškovima izgradnje postrojenja i dopremanja robe.
-\end{itemize}
 
 \subsection{Primena}
 
+Kao što ime kaže ovakvi problemi se javljaju prilikom planiranja postavljanja postrojenja i prostornog planiranja.
+
+Neke od primera primena obuhvataju\cite{tokyo}:
+\begin{itemize}
+\item  Optimizacija rasporeda zgrada u fabričkom postrojenju
+\item Nalaženje rasporeda skladišta nekog prodajnog lanca
+\item Planiranje lokacija bitnih gradskih ustanova(bolnice, vatrogasne stanice \ldots)
+\item Planiranje lokacija baznih stanica za bežične mreže
+\item Raspored elemenata na čipu radi optimalne jačine signala prilikom VLSI dizajna
+\end{itemize}
+
 \subsection{Postojeći načini rešavanja}
 
-
+Postoje blablabla\cite{Silva}
 
 
 \addcontentsline{toc}{section}{Literatura}
