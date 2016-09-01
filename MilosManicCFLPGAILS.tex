@@ -36,7 +36,7 @@ Matematičko programiranje i optimizacija\\ Matematički fakultet}}
 
 \author{
 Student:Miloš Manić 1087/2014\\
-Problem:14\\
+Problem br:14\\
 Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
 \date{9.~april 2015.}
 \maketitle
@@ -53,7 +53,7 @@ Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
 
 \section{Problem}
 \subsection{Matematička formulacija problema}
-Capacitated k-facility location problem(CKFL) se može formulisati kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvoreno:
+Capacitated k-facility location problem(CKFL) se može formulisati\cite{original} kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvoreno:
 
 \begin{align}
 min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
@@ -66,7 +66,7 @@ y \in \{ 0 , 1 \}, \forall i \in F
 \end{align}
 \subsection{Opis problema}
 
-U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$.
+U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$\cite{original}.
 \begin{enumerate}[a)]
 \item Svako postrojenje $i \in F$ ima kapacitet $s_i$
 \item Izgradnja postrojenja $i \in F$ košta $f_i$
@@ -93,7 +93,26 @@ Neke od primera primena obuhvataju\cite{tokyo}:
 
 \subsection{Postojeći načini rešavanja}
 
-Postoje blablabla\cite{Silva}
+Pored korišćenja egzaktnih metoda kao što su metode linearnog programiranja, problem je rešavan raznim heuristikama. Neke od najkorišćenijih pristupa su\cite{Silva}:
+\begin{itemize}
+\item Lokalna pretraga i varijacije
+\item Gramzive heuristike
+\item Tabu pretraga
+\item Genetski algoritmi
+\end{itemize}
+
+
+\section{Heuristike}
+
+\subsection{Genetski algoritmi}
+\subsection{Iterativna lokalna pretraga}
+\subsection{Hibridizacija}
+
+\section{Testiranje}
+\subsection{Instance}
+\subsection{Rezultati}
+\subsection{Analiza rezultata}
+\section{Zaključak}
 
 
 \addcontentsline{toc}{section}{Literatura}
