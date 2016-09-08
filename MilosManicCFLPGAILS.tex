@@ -52,21 +52,9 @@ Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
 \newpage
 
 \section{Problem}
-\subsection{Matematička formulacija problema}
-Capacitated k-facility location problem(CKFL) se može formulisati\cite{original} kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvoreno:
 
-\begin{align}
-min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
- subject\: to: 
-\quad \sum_{i \in F}x_{ij} = d_j, \forall j \in D,\quad\\
- \sum_{j \in D}x_{ij} \le s_iy_i, \forall i \in F,\\
-\sum_{i \in F}y_i \le k,\\
-x_{ij} \ge 0, \forall i \in F,\forall j \in D,\\
-y \in \{ 0 , 1 \}, \forall i \in F
-\end{align}
-\subsection{Opis problema}
 
-U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$\cite{original}.
+Za Capacitated k-facility location problem(CKFL) dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$\cite{original}.
 \begin{enumerate}[a)]
 \item Svako postrojenje $i \in F$ ima kapacitet $s_i$
 \item Izgradnja postrojenja $i \in F$ košta $f_i$
@@ -77,6 +65,19 @@ U datom probllemu dat je skup klijenata $D$ i skup potencijalnih postrojenja(lok
 
 \end{enumerate}
 Cilj je opslužiti sve klijente koristeći najviše $k$ postrojenja sa što manjim(minimalnim) troškovima izgradnje postrojenja i dopremanja robe.
+
+\subsection{Matematička formulacija problema}
+CKFL se može formulisat kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvorenoi\cite{original}:
+
+\begin{align}
+min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
+ subject\: to: 
+\quad \sum_{i \in F}x_{ij} = d_j, \forall j \in D,\quad\\
+ \sum_{j \in D}x_{ij} \le s_iy_i, \forall i \in F,\\
+\sum_{i \in F}y_i \le k,\\
+x_{ij} \ge 0, \forall i \in F,\forall j \in D,\\
+y \in \{ 0 , 1 \}, \forall i \in F
+\end{align}
 
 \subsection{Primena}
 
@@ -103,9 +104,99 @@ Pored korišćenja egzaktnih metoda kao što su metode linearnog programiranja, 
 
 
 \section{Heuristike}
-
+U radu će se primeniti jedna P-heuristika, genetski algoritam, jedna S-heuristika, iterativna lokalna pretraga, i jednu hibridna, genetski algoritam poboljšan iterativnom lokalnom pretragom na generacijskom nivou.
 \subsection{Genetski algoritmi}
+Genetski algoritam je metaheuristika inspirisana procesom prirodne selekcije koji pripada klasi evolucionih algoritama. Bazira se na operatorima koji su inspirisani prirodom kao što su mutacija, ukrštanje i selekcija\cite{mitchellbook}.
+
+
+Genetski algoritam radi nad populacijom kandidata rešenja(jedinke, rešenja, fenotipi) koja imaju određene karakteristike koje se predstavljaju nekim kodiranjem(uobičajeno nizom nula i jedinica) koje se naziva genotip.\cite{whitley} Prilagođenost(\emph {eng. fitness}).
+
+Opšti koraci u genetskom algoritmu su sledeći:
+
+\begin{enumerate}
+
+\item Inicijalizacija:\\ Generisanje početnih rešenja(jedinki) koje će se naknadno poboljšavati kroz algoritam,
+\item Mutacija: \\ Menjanje jednog ili više nasumičnih vrednosti genotipa neke jedinke. Primeri:
+\begin{itemize}
+\item bit string mutacija: bitovi genotipa se nasumično menjaju sa određenom verovatnoćom na nasumičnim mestima
+\item uniformna mutacija: menja se vrednost izabrane jedinke za novu nasumično generisanu jedinku
+\item Swap mutacija: razmenjuju se vrednosti 2 proizvoljne lokacije
+\item Scramble: nekoliko spojenih pozicija se permutuje
+\end{itemize}
+\item Selekcija: \\ Odabir određenih jedinki koje će učestvovati u ukrštanju. Prilagođenost, kao i u prirodi ima veliki uticaj na selekciju. Primeri:
+\begin{itemize}
+\item Rulet selekcija: Svaka jedinka dobije verovatnoću odabira proporcionalnu njenoj prilagođenosti
+\item Rangovska selekcija: Svaka jedinka dobije verovatnoću odabira proporcionalnu njenom rangu prilagođenosti
+\item Stohastičko univerzalno sampliranje: Svaka jedinka je jednako verovatno odabrana
+\item Turnirska selekcija: Za svaku odabranu jedinku se održava turnir u kome pobeđuje najprilagođenija jedinka
+\end{itemize}
+\item Ukrštanje \\ Izabrane jedinke se ukrštaju tako što se kombinuju njihovi genotipi za dobijanje novih jedinki. Primeri:
+\begin{itemize}
+\item one-point ukrštanje: genomi dve jedinke se seku u jednoj tački i razmenjuju se sadržaji genome- levi deo prve jedinke sa levim druge i desni prve sa desnim druge
+\item n-point ukrštanje: genotipi se seku u n tačaka i odgovarajući delovi se uzimaju za rezultujuću jedinku naizmenično
+\item uniformno ukrštanje: za svaku poziciju u reprezentaciji se nasumično bira da li će da bude uzeta od jednog ili drugog roditelja
+\end{itemize}
+\item Prekid: \\ Proces se prekida kada je neki kriterijum prekida ispunjen. Neki od čestih kriterijuma:
+\begin{itemize}
+\item Fiksni broj generacija je dostignut,
+\item Vrednost prilagođenosti je dostigla plato, i naredne iteracije ne daju bolje rezultate,
+\item Neki drugi kriterijum je dostignut(dovoljno dobro rešenje je nađeno),
+\item Resursi su istrošeni(memorija, vreme izvršavanja \ldots),
+\item Ručni prekid
+\end{itemize}
+Obično se koristi neka kombinacija navedenih kriterijuma i drugih.
+\end{enumerate}
+
+ Koraci 2-4 se ponavljaju sve dok se ne ispuni neki kriterijum prekida.
+
+
 \subsection{Iterativna lokalna pretraga}
+
+Iterativna lokalna pretraga(\emph{eng. iterated local search}) je heuristika koja generiše niz rešenja generisanih unutrašnjom heuristikom(neka varijanta lokalne pretrage), čime se dobijaju kvalitetnija rešenja od prostog ponavljanja te heuristike\cite{lourenccoils}. 
+Proces se sastoji iz dva globalna koraka:
+\begin{enumerate}
+\item Perturbacija rešenja dobijenog lokalnom pretragom
+\item Lokalna pretraga počev od modifikovanog rešenja
+\end{enumerate}
+
+Ovi koraci se ponavljaju sve dok se ne dostigne neki kriterijum zaustavljanja(fiksni broj iteracija, dostignut plato minimalne vrednosti \ldots)
+
+Na kraju svake iteracije je izabrana jedna instanca između modifikovane i instance dobijene u prethodnoj iteraciji. Na osnovu kriterijuma prihvatanja instanci se formira putanja (\emph{eng. walk}) do izabranog najboljeg rešenja, neki od čestih izbora su:
+\begin{itemize}
+\item Better: Izabrati uvek bolje rešenje
+\item Random: Izabrati uvek novo rešenje
+\item Restart:Generisati novo rešenje ako se rešenje nije poboljšalo u prethodnih $n$ iteracija
+\item Nasumično izabrati jedno od ponuđenih rešenja iz prethodnih $n$ iteracija.
+\end{itemize}
+
+Prva dva primera kriterijuma prihvatanja su određena samo trenutnim izborom i na njih ne utiču prethodne iteracije. Putanje koje se prave takvim kriterijumima se zovu Markovljeve putanje (\emph{eng. Markovian walks, Markovian chains}). Pošto poslednja dva primera uključuju u odluku prethodnih $n$ iteracija, oni ne prave Markovljeve putanje. 
+
+Snaga i oblik perturbacije su takođe bitni i od njih zavisi uspešnost iterativne lokalne pretrage. Iterativna lokalna pretraga izbegava zadržavanje na istom lokalnom optimumu tako što primenjuje perturbacije. Snaga perturbacije treba biti dovoljna da ne možemo da se lokalnom pretragom vratimo na prethodno rešenje, dakle potrebno je izvršiti modifikaciju koja je većeg reda od lokalne pretrage. S druge strane, ako snaga perturbacije bude prevelika, iterativna lokalna pretraga se ponaša kao multistart pretraga(\emph{eng. Multistart local search}), pa se bolja rešenja nalaze sa manjom verovatnoćom. 
+
+Neki od primera za perturbacije nad binarnom reprezentacijom rešenja:
+\begin{itemize}
+\item n-flip:Komplementiranje n nasumičnih bitova u reprezentaciji rešenja(U zavisnosti od lokalne pretrage, na primer
+ako je prostor lokalne pretrage n-flip, tada perturbacija mora da bude bar n+1-flip)
+\item n-switch: zamena vrednosti dva nasumična bita međusobno n puta
+\item permutacija n nasumičnih bitova
+\item \ldots
+\end{itemize}
+
+Takodje, perturbacije mogu biti adaptivne tako što se snaga perturbacije određuje na osnovu prethodnih rešenja, recimo, ako se rešenje nije poboljšalo nekoliko iteracija, povećava se snaga iteracije(recimo sa 2-flip na 3-flip).
+
+Dakle, procedura iterativne lokalne pretrage na visokom nivou može se opisati na sledeći način:
+
+\begin{lstlisting}
+procedure IteratedLocalSearch:
+	s_0=GenerateInitialSolution;
+	s*=LocalSearch(s_0);
+	repeat:
+		s'=Perturbation(s*,history);
+		s*'=LocalSearch(s');
+		s*=AcceptanceCriterion(s*,s*',history);
+	until(termination condition met
+end
+\end{lstlisting}
 \subsection{Hibridizacija}
 
 \section{Testiranje}
