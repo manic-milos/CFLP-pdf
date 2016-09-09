@@ -237,6 +237,45 @@ end.
 \end{algorithm}
 
 \subsection{Instance}
+Korišćene su već postojeće instance za CFL(\emph{capacitated facility location}) problem, uz dodat parametar k. Za skup malih instanci i za skup instanci najvećih dimezija je korišćen skup instanci koji je generisan od strane J.E. Beasley-a\cite{beasley}, dok je za skup srednjih instanci korišćen skup generisan od strane K. Holmberg-a, M. Ronnqvist-a i D. Yuan-a \cite{holmberg}.
+
+Da bi se izabralo odgovarajuće k korišćen je algoritam za izdvajanje optimalnih rešenja za različite vrednosti k čiji je pseudo kod prikazan:
+\begin{algorithm}
+for each instance
+	bestSolution=executeProblem(k=m);
+	for j=1 to m:
+		sol=executeProblem(k=j);
+		if(unfeasable)
+			continue;
+		if(sol is the optimal solution):
+			if(sol=bestSolution):
+				break;
+			log(sol);
+	end;
+end.
+\end{algorithm}
+
+Dalje se na osnovu upisanih rezultata(log) bira instanca sa odgovarajućom vrednošću parametra k. Pošto ima mnogo više instanci nego što je potrebno, instance sa sličnim osobinama i rezultatima se odbacuju, a ako neka instanca ispoljava "zanimljive" osobine, uzima se više puta sa odgovarajućim vrednostima parametra k.
+
+Primer zapisa jedne instance koja je korišćena za proveru ispravnosti programa je prikazan. Instanca je ručno smišljena tako da funkcija cilja bude različita za različite vrednosti parametra k.
+\begin{lstlisting}
+n=2 m=3
+k=2
+
+d_j
+2 3
+
+f_i
+1 2 3
+
+s_i
+1 5 7
+
+c_i_j
+1 2 
+3 2
+3 2
+\end{lstlisting}
 \subsection{Rezultati}
 \subsection{Analiza rezultata}
 \section{Zaključak}
