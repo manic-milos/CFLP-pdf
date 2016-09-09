@@ -10,15 +10,27 @@
 \usepackage{amsmath}
 \usepackage{listings}
 \usepackage{enumerate}
-\lstset{language=C++,
-    frame=tb, % draw a frame at the top and bottom of the code block
-    tabsize=4, % tab space width
-    showstringspaces=false, % don't mark spaces in strings
-    numbers=left, % display line numbers on the left
-    commentstyle=\color{green}, % comment color
-    keywordstyle=\color{blue}, % keyword color
-    stringstyle=\color{red} % string color
+\usepackage{listings}
+\usepackage{caption}
+
+
+\lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
+{   
+    \refstepcounter{nalg} %increments algorithm number
+    \captionsetup{labelformat=algocaption,labelsep=colon} %defines the caption setup for: it ises label format as the declared caption label above and makes label and caption text to be separated by a ':'
+    \lstset{ %this is the stype
+        frame=tB,
+        numbers=left, 
+        numberstyle=\tiny,
+        basicstyle=\scriptsize, 
+        keywordstyle=\color{black}\bfseries\em,
+        keywords={,input, output, return, datatype, function, in, if, else, foreach, while, begin, end, procedure,repeat,until,for,do } %add the keywords you want, or load a language as Rubens explains in his comment above.
+        numbers=left,
+        xleftmargin=.04\textwidth,
+        #1 % this is to add specific settings to an usage of this environment (for instnce, the caption and referable label)
+    }
 }
+{}
 
 \usepackage[english, serbian]{babel}
 %\usepackage[english, serbianc]{babel} %ukljuciti babel sa ovim opcijama, umesto gornjim, ukoliko se koristi cirilica
@@ -28,6 +40,9 @@
 
 %\newtheorem{primer}{Пример}[section] %ćirilični primer
 \newtheorem{primer}{Primer}[section]
+\newcounter{nalg}[subsection] % defines algorithm counter for chapter-level
+\renewcommand{\thenalg}{\thechapter .\arabic{nalg}} %defines appearance of the algorithm counter
+\DeclareCaptionLabelFormat{algocaption}{Algorithm \thenalg} % defines a new caption label as Algorithm x.y
 
 \begin{document}
 
@@ -149,6 +164,7 @@ Obično se koristi neka kombinacija navedenih kriterijuma i drugih.
 
  Koraci 2-4 se ponavljaju sve dok se ne ispuni neki kriterijum prekida.
 
+\subsubsection{Prilagođeni genetski algoritam za rešavanje CFLP}
 
 \subsection{Iterativna lokalna pretraga}
 
@@ -186,7 +202,7 @@ Takodje, perturbacije mogu biti adaptivne tako što se snaga perturbacije određ
 
 Dakle, procedura iterativne lokalne pretrage na visokom nivou može se opisati na sledeći način:
 
-\begin{lstlisting}
+\begin{algorithm}
 procedure IteratedLocalSearch:
 	s_0=GenerateInitialSolution;
 	s*=LocalSearch(s_0);
@@ -194,12 +210,32 @@ procedure IteratedLocalSearch:
 		s'=Perturbation(s*,history);
 		s*'=LocalSearch(s');
 		s*=AcceptanceCriterion(s*,s*',history);
-	until(termination condition met
+	until(termination condition met)
 end
-\end{lstlisting}
+\end{algorithm}
+
+Kriterijumi zaustavljanja mogu da budu bazirani na broju iteracija, vremenu ili nekom drugom resursu, platou minimalne vrednosti, itd.
+
+\subsubsection{Prilagođena iterativna lokalna pretraga za rešavanje CFLP}
 \subsection{Hibridizacija}
 
-\section{Testiranje}
+Genetski algoritmi i iterativna lokalna pretraga se mogu kombinovati na nekoliko načina. Jedan od njih je korišćenje genetskog algoritma za dobijanje populacije rešenja pa korišćenje iterativne lokalne pretrage za poboljšavanje tih rešenja. Drugi način je u poboljšavati deo svake generacije iterativnom lokalnom pretragom i ubacivati poboljšane jedinke u generaciju, takva varijacija genetskog algoritma se zove memetski algoritam(\emph{eng. Memetic algorithm})\cite{memetic}. U ovom radu su prikazani rezultati obe metode. U prvoj metodi se primenjivala iterativna lokalna pretraga na sve jedinke rezultujuće populacije genetskog algoritma. U memetskom algoritmu je zbog performansi izvršavana iterativna lokalna pretraga samo na prvih 10 jedinki, uz pamćenje vrednosti za jedinke koje se održe kroz generacije.
+\section{Eksperimentalni rezultati}
+
+Opisani metodi su implementirani u jeziku c\# i .NET okruženju. Za rad je korišćen Visual Studio Ultimate 2013. Za dobijanje egzaktnog rešenja korišćen je \emph{IBM ILOG CPLEX Teaching Edition 12.1}, čije je vreme izvršavanja po instanci ograničeno na 4 sata. Za testiranje je korišćen računar sa \emph{Intel i7} procesorom na $3.1GHz$ i $8GB \, RAM$ memorije. Aplikacija je izvršavana na jednom jezgru(bez paralelizacije) zato što strukture korišćene pri implementaciji nisu bile bezbedne za paralelni rad(\emph{thread-safe}).
+
+Sve metode su sa svim instancama testirane po 20 puta sa različitim \emph{random seed} vrednostima. \emph{Random seed} vrednosti su dobijene pomoću drugog nasumičnog niza po sledećoj proceduri:
+
+\begin{algorithm}
+procedure testing(c):
+	Random a=new Random(c);
+	for 1 to 20 do:
+		Random b=new Random(seed=a.next());
+		test(random=b);
+	end;
+end.
+\end{algorithm}
+
 \subsection{Instance}
 \subsection{Rezultati}
 \subsection{Analiza rezultata}
