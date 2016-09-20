@@ -12,7 +12,8 @@
 \usepackage{enumerate}
 \usepackage{listings}
 \usepackage{caption}
-
+\usepackage{longtable}
+\usepackage{multirow}
 
 \lstnewenvironment{algorithm}[1][] %defines the algorithm listing environment
 {   
@@ -277,6 +278,37 @@ c_i_j
 3 2
 \end{lstlisting}
 \subsection{Rezultati}
+{
+\setlength\LTleft{-10em}
+\begin{longtable}[c]{| c | c | c | c  c  c  c  c  c  c  c  c |}
+
+ \caption{Eksperimentalni rezultati.\label{long}}\\
+ 
+ \hline
+ \multicolumn{12}{| c |}{Rezultati malih instanci}\\
+ \hline
+
+ Instanca  & metoda & $sol$ & $t_{tot}[s]$ & $t_{best}[s]$ & $gen$ & $eval$ &$caching$&  $agap[\%]$ & 
+$\sigma$&$cache$ \\
+ \hline
+ \endfirsthead
+
+ 
+ \hline
+ \endfoot
+ 
+ \hline
+ \multicolumn{12}{| c |}{End of Table}\\
+ \hline\hline
+ \endlastfoot
+ 
+\multirow{5}{*}{/name/} & $CPLEX$ & /bestsol/ & \multicolumn{8}{| c |}{-}\\
+&$GA$ & /GAsol/ & /GAttot/ & /GAt/ & /GAgen/ & /GAeval/ & /GAcache/ &/GAaagap/ & /GAsigma/ & /GAcachepercent/\\
+&$ILS$ & /ILSsol/ & /ILSttot/ & /ILSt/ & - & /ILSeval/ & /ILScache/ &/ILSaagap/ & /ILSsigma/ & /ILScachepercent/\\
+&$GA+ILS$ & /GAAsol/ & /GAAttot/ & /GAAt/ & /GAAgen/ & /GAAeval/ & /GAAcache/ &/GAAaagap/ & /GAAsigma/ & /GAAcachepercent/\\
+&$Mem$ & /MEMsol/ & /MEMttot/ & /MEMt/ & /MEMgen/ & /MEMeval/ & /MEMcache/ &/MEMaagap/ & /MEMsigma/ & /MEMcachepercent/\\
+ \end{longtable}
+}
 \subsection{Analiza rezultata}
 \section{Zaključak}
 
