@@ -48,20 +48,28 @@
 
 \begin{document}
 
-\title{Hard capacitated k-facility location problem \\ \small{Seminarski rad u okviru kursa\\
+\title{Problem lokacije k postrojenja sa kapacitetima \\ \small{Seminarski rad u okviru kursa\\
 Matematičko programiranje i optimizacija\\ Matematički fakultet}}
 
 \author{
-Student:Miloš Manić 1087/2014\\
+Student: Miloš Manić 1087/2014\\
 Nastavnik: dr Zorica Stanimirović\\
-Problem br:14\\
+Problem br: 14\\
 Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
 \date{9.~april 2015.}
 \maketitle
 
 \abstract{
-\textbf{Ključne reči:} Hard capacitated k-facility location problem, optimizacija, metaheuristike, genetski algoritmi, iterativna lokalna pretraga, hibridne heuristike
+U ovom radu se ispituje primena različitih heurističkih metoda na problem lokacije k postrojenja sa kapacitetima (\emph{eng. Hard capacitated k-facility location problem}). U problemu je dat skup klijenata sa potražnjom i skup postrojenja sa kapacitetima, kao i parametar k. Cilj pri rešavanju je otvoriti najviše k postrojenja tako da se opsluže potražnje svih klijenata uz minimizovanje cene otvaranja postrojenja i opsluživanja klijenata. 
+
+Za rešavanje se koriste prilagođene metaheuristike koje obuhvataju genetske algoritme i iterativnu lokalnu pretragu. U radu se takođe testiraju dve hibridne metode koje kao sastavne delove sadrže ove dve metode.
+
+Na kraju slede eksperimentalni rezultati, koji prikazuju rezultate testiranja na modifikovanim postojećim instancama za probleme lokacije postrojenja. Analiza rezultata potvrđuje da su hibridne metode skoro generalno bolje rešenje od njihovih jednostavnijih delova, kao i da se za instance problema sa velikim dimenzijama isplati koristiti metaheuristike umesto egzaktnih metoda, kada su resursi ograničeni.\\\\
+
+\textbf{Ključne reči:} Hard capacitated k-facility location problem, CKFL, CFLP , optimizacija, metaheuristike, genetski algoritmi, iterativna lokalna pretraga, hibridne heuristike
 }
+\newpage
+
 \tableofcontents
 
 \newpage
@@ -69,11 +77,11 @@ Metode: Genetski algoritmi, iterativna lokalna pretraga i njihova hibridizacija}
 \section{Problem}
 
 
-Za Capacitated k-facility location problem(CKFL) dat je skup klijenata $D$ i skup potencijalnih postrojenja(lokacija na kojima se može izgraditi postrojenje $F$\cite{original}.
+Za problem lokacije k postrojenja sa kapacitetima( \emph{eng. Capacitated k-facility location problem, CKFL}) dat je skup klijenata $D$ i skup potencijalnih postrojenja $F$ (lokacija na kojima se može izgraditi postrojenje) \cite{original}.
 \begin{enumerate}[a)]
 \item Svako postrojenje $i \in F$ ima kapacitet $s_i$
 \item Izgradnja postrojenja $i \in F$ košta $f_i$
-\item Svaki klijent $j \in D$ ima potražnju $d_i$
+\item Svaki klijent $j \in D$ ima potražnju $d_j$
 \item Slanje $x_{ij}$ jedinica robe od postrojenja $i$ do klijenta $j$ košta $c_{ij}x_{ij}$, gde je $c_{ij}$ jedinicna cena proporcionalna rastojanju između $i$ i $j$
 \item Na svakoj potencijalnoj lokaciji $i \in F$ može se izgraditi najviše jedno postrojenje
 \item Bez gubitka opštosti može se smatrati da su cene izgradnje $f_i$, kapaciteti $s_i$, i potražnje $d_j$ celi brojevi
@@ -82,7 +90,7 @@ Za Capacitated k-facility location problem(CKFL) dat je skup klijenata $D$ i sku
 Cilj je opslužiti sve klijente koristeći najviše $k$ postrojenja sa što manjim(minimalnim) troškovima izgradnje postrojenja i dopremanja robe.
 
 \subsection{Matematička formulacija problema}
-CKFL se može formulisat kao sledeći Mixed Integer Problem(MIP) gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvorenoi\cite{original}:
+CKFL se može formulisati kao sledeći \emph{Mixed Integer Problem(MIP)} gde promenljiva $x_{ij}$ označava količinu potražnje klijenta $j$ koja je opslužena postrojenjem $i$, a $y_i$ označava da li je postrojenje $i$ otvoreno\cite{original}:
 
 \begin{align}
 min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
@@ -91,7 +99,7 @@ min \sum_{i \in F}\sum_{j \in D}c_{ij}x_{ij} + \sum_{j \in F}f_iy_i\\
  \sum_{j \in D}x_{ij} \le s_iy_i, \forall i \in F,\\
 \sum_{i \in F}y_i \le k,\\
 x_{ij} \ge 0, \forall i \in F,\forall j \in D,\\
-y \in \{ 0 , 1 \}, \forall i \in F
+y_i \in \{ 0 , 1 \}, \forall i \in F
 \end{align}
 
 \subsection{Primena}
@@ -100,11 +108,11 @@ Kao što ime kaže ovakvi problemi se javljaju prilikom planiranja postavljanja 
 
 Neke od primera primena obuhvataju\cite{tokyo}:
 \begin{itemize}
-\item  Optimizacija rasporeda zgrada u fabričkom postrojenju
-\item Nalaženje rasporeda skladišta nekog prodajnog lanca
-\item Planiranje lokacija bitnih gradskih ustanova(bolnice, vatrogasne stanice \ldots)
-\item Planiranje lokacija baznih stanica za bežične mreže
-\item Raspored elemenata na čipu radi optimalne jačine signala prilikom VLSI dizajna
+\item  Optimizacija rasporeda zgrada u fabričkom postrojenju,
+\item Nalaženje rasporeda skladišta nekog prodajnog lanca,
+\item Planiranje lokacija bitnih gradskih ustanova(bolnice, vatrogasne stanice \ldots),
+\item Planiranje lokacija baznih stanica za bežične mreže,
+\item Raspored elemenata na čipu radi optimalne jačine signala prilikom VLSI dizajna,
 \end{itemize}
 
 \subsection{Postojeći načini rešavanja}
@@ -112,44 +120,44 @@ Neke od primera primena obuhvataju\cite{tokyo}:
 Pored korišćenja egzaktnih metoda kao što su metode linearnog programiranja, problem je rešavan raznim heuristikama. Neke od najkorišćenijih pristupa su\cite{Silva}:
 \begin{itemize}
 \item Lokalna pretraga i varijacije
-\item Gramzive heuristike
+\item Pohlepne heuristike
 \item Tabu pretraga
 \item Genetski algoritmi
 \end{itemize}
 
 
 \section{Heuristike}
-U radu će se primeniti jedna P-heuristika, genetski algoritam, jedna S-heuristika, iterativna lokalna pretraga, i jednu hibridna, genetski algoritam poboljšan iterativnom lokalnom pretragom na generacijskom nivou.
+U radu će se primeniti jedna P-heuristika, genetski algoritam, jedna S-heuristika, iterativna lokalna pretraga, i dve hibridne, genetski algoritam poboljšan iterativnom lokalnom pretragom u poslednjoj generaciji i na generacijskom nivou.
 \subsection{Genetski algoritmi}
 Genetski algoritam je metaheuristika inspirisana procesom prirodne selekcije koji pripada klasi evolucionih algoritama. Bazira se na operatorima koji su inspirisani prirodom kao što su mutacija, ukrštanje i selekcija\cite{mitchellbook}.
 
 
-Genetski algoritam radi nad populacijom kandidata rešenja(jedinke, rešenja, fenotipi) koja imaju određene karakteristike koje se predstavljaju nekim kodiranjem(uobičajeno nizom nula i jedinica) koje se naziva genotip.\cite{whitley} Prilagođenost(\emph {eng. fitness}).
+Genetski algoritam radi nad populacijom kandidata rešenja(jedinke, rešenja, fenotipi) koja imaju određene karakteristike koje se predstavljaju nekim kodiranjem(uobičajeno nizom nula i jedinica) koje se naziva genotip.\cite{whitley} Prilagođenost(\emph {eng. fitness}) je mera koja se računa u odnosu na problem koji se rešava i u direktnoj je relaciji sa rešenjem problema(uglavnom se na neki pohlepan način dolazi od genotipa do rešenja problema koji se rešava i rešenje problema se, uz neke transformacije koristi kao prilagođenost).
 
 Opšti koraci u genetskom algoritmu su sledeći:
 
 \begin{enumerate}
 
-\item Inicijalizacija:\\ Generisanje početnih rešenja(jedinki) koje će se naknadno poboljšavati kroz algoritam,
+\item Inicijalizacija:\\ Generisanje početnih rešenja(jedinki) koja će se naknadno poboljšavati kroz algoritam,
 \item Mutacija: \\ Menjanje jednog ili više nasumičnih vrednosti genotipa neke jedinke. Primeri:
 \begin{itemize}
-\item bit string mutacija: bitovi genotipa se nasumično menjaju sa određenom verovatnoćom na nasumičnim mestima
-\item uniformna mutacija: menja se vrednost izabrane jedinke za novu nasumično generisanu jedinku
-\item Swap mutacija: razmenjuju se vrednosti 2 proizvoljne lokacije
-\item Scramble: nekoliko spojenih pozicija se permutuje
+\item \emph{bit string} mutacija: bitovi genotipa se nasumično menjaju sa određenom verovatnoćom na nasumičnim mestima
+\item \emph{uniformna} mutacija: menja se vrednost izabrane jedinke za novu nasumično generisanu jedinku
+\item \emph{Swap} mutacija: razmenjuju se vrednosti 2 proizvoljne lokacije
+\item \emph{Scramble}: nekoliko spojenih pozicija se permutuje
 \end{itemize}
 \item Selekcija: \\ Odabir određenih jedinki koje će učestvovati u ukrštanju. Prilagođenost, kao i u prirodi ima veliki uticaj na selekciju. Primeri:
 \begin{itemize}
-\item Rulet selekcija: Svaka jedinka dobije verovatnoću odabira proporcionalnu njenoj prilagođenosti
+\item Ruletska selekcija: Svaka jedinka dobije verovatnoću odabira proporcionalnu njenoj prilagođenosti
 \item Rangovska selekcija: Svaka jedinka dobije verovatnoću odabira proporcionalnu njenom rangu prilagođenosti
 \item Stohastičko univerzalno sampliranje: Svaka jedinka je jednako verovatno odabrana
 \item Turnirska selekcija: Za svaku odabranu jedinku se održava turnir u kome pobeđuje najprilagođenija jedinka
 \end{itemize}
 \item Ukrštanje \\ Izabrane jedinke se ukrštaju tako što se kombinuju njihovi genotipi za dobijanje novih jedinki. Primeri:
 \begin{itemize}
-\item one-point ukrštanje: genomi dve jedinke se seku u jednoj tački i razmenjuju se sadržaji genome- levi deo prve jedinke sa levim druge i desni prve sa desnim druge
-\item n-point ukrštanje: genotipi se seku u n tačaka i odgovarajući delovi se uzimaju za rezultujuću jedinku naizmenično
-\item uniformno ukrštanje: za svaku poziciju u reprezentaciji se nasumično bira da li će da bude uzeta od jednog ili drugog roditelja
+\item \emph{one-point} ukrštanje: genomi dve jedinke se seku u jednoj tački i razmenjuju se sadržaji genome- levi deo prve jedinke sa levim druge i desni prve sa desnim druge
+\item \emph{n-point} ukrštanje: genotipi se seku u n tačaka i odgovarajući delovi se uzimaju za rezultujuću jedinku naizmenično
+\item \emph{uniformno} ukrštanje: za svaku poziciju u reprezentaciji se nasumično bira da li će da bude uzeta od jednog ili drugog roditelja
 \end{itemize}
 \item Prekid: \\ Proces se prekida kada je neki kriterijum prekida ispunjen. Neki od čestih kriterijuma:
 \begin{itemize}
@@ -166,14 +174,14 @@ Obično se koristi neka kombinacija navedenih kriterijuma i drugih.
 
 Jedinke dobijene operatorima se ponekad prilagođavaju, tj od neispravnih rešenja se prave ispravna. Recimo, ako jedinka ima previše  jedinica u reprezentaciji smanjuje se njihov broj nekim postupkom, i analogno za nule. Takvi postupci mogu biti deterministički ili stohastički. 
 
-Za pravovremenu konvergenciju algoritma je bitna stragegija zamene jedinki iz generacije u generaciju:
+Za pravovremenu konvergenciju algoritma takođe je bitna stragegija zamene jedinki iz generacije u generaciju\cite{gen2000}:
 \begin{itemize}
 \item Generacijski genetski algoritmi - sve jedinke u populaciji se zamenjuju novom generacijom
 \item Stacionarni genetski algoritmi - samo deo populacije se zamenjuje
 \item Elitistički genetski algoritmi - odabrane jedinke(elitne) se prebacuju direktno u sledeću generaciju, a sve ostale se menjaju.
 \end{itemize}
 
-\subsubsection{Prilagođeni genetski algoritam za rešavanje CFLP}
+\subsubsection{Prilagođeni genetski algoritam za rešavanje CKFL}
 
 Za rešavanje problema je korišćen genetski algoritam sa sledećim osobinama:
 
@@ -204,9 +212,9 @@ Ovi koraci se ponavljaju sve dok se ne dostigne neki kriterijum zaustavljanja(fi
 
 Na kraju svake iteracije je izabrana jedna instanca između modifikovane i instance dobijene u prethodnoj iteraciji. Na osnovu kriterijuma prihvatanja instanci se formira putanja (\emph{eng. walk}) do izabranog najboljeg rešenja, neki od čestih izbora su:
 \begin{itemize}
-\item Better: Izabrati uvek bolje rešenje
-\item Random: Izabrati uvek novo rešenje
-\item Restart:Generisati novo rešenje ako se rešenje nije poboljšalo u prethodnih $n$ iteracija
+\item \emph{Better}: Izabrati uvek bolje rešenje
+\item \emph{Random}: Izabrati uvek novo rešenje
+\item \emph{Restart}:Generisati novo rešenje ako se rešenje nije poboljšalo u prethodnih $n$ iteracija
 \item Nasumično izabrati jedno od ponuđenih rešenja iz prethodnih $n$ iteracija.
 \end{itemize}
 
@@ -216,9 +224,9 @@ Snaga i oblik perturbacije su takođe bitni i od njih zavisi uspešnost iterativ
 
 Neki od primera za perturbacije nad binarnom reprezentacijom rešenja:
 \begin{itemize}
-\item n-flip:Komplementiranje n nasumičnih bitova u reprezentaciji rešenja(U zavisnosti od lokalne pretrage, na primer
+\item\emph{n-flip}:Komplementiranje n nasumičnih bitova u reprezentaciji rešenja(U zavisnosti od lokalne pretrage, na primer
 ako je prostor lokalne pretrage n-flip, tada perturbacija mora da bude bar n+1-flip)
-\item n-switch: zamena vrednosti dva nasumična bita međusobno n puta
+\item \emph{n-switch}: zamena vrednosti dva nasumična bita međusobno n puta
 \item permutacija n nasumičnih bitova
 \item \ldots
 \end{itemize}
@@ -241,7 +249,7 @@ end
 
 Kriterijumi zaustavljanja mogu da budu bazirani na broju iteracija, vremenu ili nekom drugom resursu, platou minimalne vrednosti, itd.
 
-\subsubsection{Prilagođena iterativna lokalna pretraga za rešavanje CFLP}
+\subsubsection{Prilagođena iterativna lokalna pretraga za rešavanje CKFL}
 
 Za rešavanje problema je korišćena iterativna lokalna pretraga sa sledećim karakteristikama:
 
@@ -250,9 +258,9 @@ Za rešavanje problema je korišćena iterativna lokalna pretraga sa sledećim k
 	\begin{itemize}
 		\item Ako se posle 10000 pokušaja ne dobije rešenje problem se proglašava nerešivim.
 	\end{itemize}
-\item \textbf{Lokalna pretraga:} Pretražuje se u okolini rešenja sa jednim različitim bitom u odnosu na početno
-\item \textbf{Perturbacija:} Koristi se adaptivna perturbacija sa uzajamnom razmenom dva nasumična bita sa 50 maksimalnih perturbacija, verovatnoća sledeće uzastopne perturbacije raste za 0.01 po iteraciji od iteracije u kojoj je dobijeno trenutno trenutno maksimalno rešenje
-\item \textbf{Kriterijum prihvatanja:}: Uzima se bolje rešenje(\emph{Better walk}), sa restartovanjem posle 500 iteracija platoa vrednosti(\emph{Restart walk})
+\item \textbf{Lokalna pretraga:} Pretražuje se u okolini rešenja sa jednim različitim bitom u odnosu na početno(\emph{1-flip})
+\item \textbf{Perturbacija:} Koristi se adaptivna perturbacija sa uzajamnom razmenom dva nasumična bita(\emph{1-switch}) sa 50 maksimalnih perturbacija, verovatnoća sledeće uzastopne perturbacije raste za 0.01 po iteraciji od iteracije u kojoj je dobijeno trenutno trenutno maksimalno rešenje
+\item \textbf{Kriterijum prihvatanja:}: Uzima se bolje rešenje(\emph{Better walk}), uz restartovanje posle 500 iteracija platoa vrednosti(\emph{Restart walk})
 \item \textbf{Kriterijum zaustavljanja:} Zaustavlja se posle 1000 iteracija
 \end{itemize}
 \subsection{Hibridizacija}
@@ -293,7 +301,7 @@ for each instance
 end.
 \end{algorithm}
 
-Dalje se na osnovu upisanih rezultata(log) bira instanca sa odgovarajućom vrednošću parametra k. Pošto ima mnogo više instanci nego što je potrebno, instance sa sličnim osobinama i rezultatima se odbacuju, a ako neka instanca ispoljava "zanimljive" osobine, uzima se više puta sa odgovarajućim vrednostima parametra k. U tabelama koje slede su prikazane karakteristike instanci koje su korišćene za testiranje. Zvezdicom su označene instance čije rešenje ne postoji.
+Dalje se na osnovu upisanih rezultata(\emph{log-a}) bira instanca sa odgovarajućom vrednošću parametra k. Pošto ima mnogo više potencijalnih instanci nego što je potrebno, instance sa sličnim osobinama i rezultatima se odbacuju, a ako neka instanca ispoljava "{} zanimljive"{ } osobine, uzima se više puta sa odgovarajućim vrednostima parametra k. U tabelama koje slede su prikazane karakteristike instanci koje su korišćene za testiranje. Zvezdicom su označene instance čije rešenje ne postoji.
 
 
 \begin{longtabu} to 1\textwidth{ X[2] | X  X  X }\caption{Instance malih dimenzija.\label{instancetable}}\\ Instanca & n & m &k \\\hline\endfirsthead\endfoot Instanca & n & m &k \\\hline\endhead\hline\endlastfoot $cap101$& $50$ & $25$ & $2$\\ 
@@ -370,14 +378,14 @@ U tabeli \ref{long} su sabrani rezultati testiranja. CPLEX rezultati imaju samo 
 \begin{itemize}
 \item
 Kolona $sol$ označava srednju vrednost rešenja u slučaju metaheuristika nađenu iz svih izvršavanja sa različitim \emph{random seed-om}. 
-\item Kolona $t_{tot}[s]$ sadrži ukupna srednja vremena izvršavanja metaheuristika.
-\item Kolona $t_{best}[s]$ sadrži srednje vreme kada je prvi put dobijen konačan rezultat.
-\item Kolona $gen$ označava srednju vrednost generacije u kojoj je prvi put dobijen konačan rezultat.
-\item Kolona $eval$ označava srednju vrednost ukupnog broja poziva funkcije za evaluaciju rešenja
-\item Kolona $caching$ označava srednju vrednost broja puta kada je evaluacija dobijena iz heš tabele.
-\item Kolona $agap$ sadrži srednju vrednost apsolutne razlike vrednosti dobijene metaheuristikama i vrednosti dobijene CPLEX-om.
-\item Kolona $\sigma$ sadrži standardnu devijaciju vrednosti koje su dobijene metaheuristikama u odnosu na CPLEX
-\item Kolona $cache$ sadrži procenat uzimanja vrednosti iz heš tabele u odnosu na ukupan broj poziva.
+\item Kolona $t_{tot}[s]$ sadrži ukupna srednja vremena izvršavanja heuristika,
+\item Kolona $t_{best}[s]$ sadrži srednje vreme kada je prvi put dobijen konačan rezultat,
+\item Kolona $gen$ označava srednju vrednost generacije u kojoj je prvi put dobijen konačan rezultat,
+\item Kolona $eval$ označava srednju vrednost ukupnog broja poziva funkcije za evaluaciju rešenja,
+\item Kolona $caching$ označava srednju vrednost broja puta kada je evaluacija dobijena iz heš tabele,
+\item Kolona $agap$ sadrži srednju vrednost apsolutne razlike vrednosti dobijene heuristikama i vrednosti dobijene CPLEX-om,
+\item Kolona $\sigma$ sadrži standardnu devijaciju vrednosti koje su dobijene heuristikama u odnosu na CPLEX,
+\item Kolona $cache$ sadrži procenat uzimanja vrednosti iz heš tabele u odnosu na ukupan broj poziva funkcije za evaluaciju.
 \end{itemize}
 %% tabela
 \begin{longtabu} to 1.31\textwidth { X[1] | X[1.1] | X[2] | X[0.8]  X [0.6] X[0.6]  X[1.5]  X[1.5]  X[0.8] X [0.5] X[0.5]} \caption{Eksperimentalni rezultati.\label{long}}\\ Instanca  & metoda & $sol$ & $t_{tot}[s]$ & $t_{best}[s]$ & $gen$ & $eval$ &$caching$&  $agap$ & $\sigma[\%]$&$cache[\%]$ \\ \hline \endfirsthead\hline\endfoot Instanca  & metoda & $sol$ & $t_{tot}[s]$ & $t_{best}[s]$ & $gen$ & $eval$ &$caching$&  $agap$ & $\sigma[\%]$&$cache[\%]$ \\ \hline \endhead\hline \hline\endlastfoot \multirow{5}{*}{$cap101$} & $CPLEX$ & 3883226133.00 & \multicolumn{8}{ c }{-}\\\nopagebreak &$GA$ & 3883226133.00 & 12.39 & 0.47 & 1.57 & 9404.33 & 9149.95 &0.00 & 0.00 & 97.30\\\nopagebreak &$ILS$ & 3904521625.52 & 0.26 & 0.21 & - & 5063.05 & 4765.14 &0.01 & 0.00 & 94.12\\\nopagebreak &$GA+ILS$ & 3883226133.00 & 6.93 & 0.26 & 3.05 & 22656.00 & 22331.05 &0.00 & 0.00 & 98.57\\\nopagebreak &$Mem$ & 3883226133.00 & 37.61 & 0.40 & 0.90 & 279643.00 & 279318.00 &0.00 & 0.00 & 99.88\\\hline\pagebreak[0]
@@ -455,16 +463,16 @@ Kolona $sol$ označava srednju vrednost rešenja u slučaju metaheuristika nađe
 
 Heuristike rade u dosta kraćem vremenu i ne može se očekivati da imaju uvek optimalan rezultat. Takođe, konačna vrednost se računa pomoću pohlepne strategije i tu takođe može doći do odstupanja. Medjutim, kad se ispune određeni uslovi u određenoj instanci, ovde primenjivane heuristike daju dobre rezultate. 
 
-Sve testirane heurističke metode su se dobro pokazale sa instancama gde je mali parametar k, a velika dimenzija problema(m i n). Parametri m i n povećavaju broj ispravnih rešenja dok ih k smanjuje. Dok je za tehnike CPLEX-a mali parametar predstavljao dodatnu prepreku pri rešavanju i rešavanje je prelazilo zadatu granicu od 4 sata, za heuristike(pogotovo P heuristike) se to pokazalo kao olakšavajuća okolnost. Neke instance, kao što su $capa$ i $capb$ imale su varijante gde je jedna instanca imala minimalno k moguće da bi problem bio rešiv a druga $k=m$. Po ovim instancama može se videti glavna prednost obe metode. Za heurističke metode je to smanjivalo broj rešenja pa se sa svakom generacijom(iteracijom) pokrivala više jedinki potencijalne populacije. Kada je k bilo jednako m tada je broj potencijalnih jedinki bio znatno veći pa su heurističke metode imale više posla pri pretrazi. 
+Sve testirane heurističke metode su se dobro pokazale sa instancama gde je mali parametar k, a velika dimenzija problema(m i n). Parametri m i n povećavaju broj ispravnih rešenja dok ih k smanjuje. Dok je za tehnike CPLEX-a mali parametar predstavljao dodatnu prepreku pri rešavanju i rešavanje je prelazilo zadatu granicu od 4 sata, za heuristike(pogotovo P heuristike) se to pokazalo kao olakšavajuća okolnost. Neke instance, kao što su $capa$ i $capb$ imale su varijante gde je jedna instanca imala minimalno k moguće da bi problem bio rešiv a druga $k=m$. Po ovim instancama može se videti glavna prednost obe metode. Za heurističke metode je to smanjivalo broj rešenja pa se sa svakom generacijom(iteracijom) pokrivalo više jedinki potencijalne populacije. Kada je k bilo jednako m tada je broj potencijalnih jedinki bio znatno veći pa su heurističke metode imale više posla pri pretrazi. 
 
 Zbog uglavnom malog broja mogućih ispravnih rešenja u instancama iterativna lokalna pretraga se pokazala loše, jer lokalna pretraga nije pomogla poboljšanju rezultata. Takođe se vidi u tabelama da je iterativna lokalna pretraga imala generalno veću varijansu. To se može objasniti većom zavisnošću od izbora početnog rešenja, koje je uglavnom nasumično izabrano.
 
-Takođe se može videti da je varijansa generalno dosta mala, na šta utiče više stvari. Za male instance gde je dobijeno optimalno rešenje to znači da je istražen ceo prostor rešenja. Na osnovu velikih instanci može se zaključiti da bi proces možda trebao biti malo više nasumičan, jer je jedina razlika između različitih izvršavanja \emph{random seed}. 
+Takođe se može videti da je varijansa generalno dosta mala, na šta utiče više stvari. Za male instance gde je dobijeno optimalno rešenje to znači da je istražen ceo prostor rešenja. Na osnovu velikih instanci kod kojih heuristike nisu bile blizu optimalnog rešenja može se zaključiti da bi proces možda trebao biti malo više stohastičan, jer je jedina razlika između različitih izvršavanja \emph{random seed}. 
 
 Memetski algoritam se pokazao jako dobro, i u nekim instancama čak dobio bolje rezultate nego CPLEX(zbog prekoračenja vremenskog ograničenja CPLEX-a recimo na instancama capb3 i capb4, koje je memetski algoritam rešio za svega 119 i 96 sekundi). Naravno, to je posledica konkretnih osobina instance a ne pravilo. Memetski algoritam je konstantno imao bolja rešenja od ostalih metoda na skoro svim instancama. To se i moglo očekivati jer je najkomplikovanija metoda i sastoji se od ostalih testiranih metoda. Metoda genetskog algoritma koja sadrži ILS na kraju je bila bolja od pojedinačnih metoda ali gora generalno od memetskog algoritma jer je poboljšanje koje pruža ILS primenjeno samo na kraju.
 \section{Zaključak}
 
-Eksperimantalni rezultati su pokazali da heuristike daju jako dobre rezultate za mnogo manje vremena za velike instance sa malim parametrom k. Naravno, kad je preciznost najbitnija, a dostupno je dovoljno resursa(vreme, memorija, itd) koristiće se egzaktni rešavači. Ali ako je vreme bitno minimizovati, ili dobiti što bliže rešenje za što manje vremena, treba koristiti heuristike. Testiranje vršeno u ovom radu je pokazalo da za ovaj, konkretan problem, rešavanje heuristikom može biti pouzdano, ako se parametri heuristike podese na odgovarajući način.
+Eksperimantalni rezultati su pokazali da heuristike daju jako dobre rezultate za mnogo manje vremena za velike instance sa malim parametrom k. Naravno, kad je preciznost najbitnija, a dostupno je dovoljno resursa(vreme, memorija, itd) najbolje jekoristiti egzaktne rešavače. Ali kad je vreme potrebno minimizovati, ili dobiti što bliže rešenje za što manje vremena, treba koristiti heuristike. Testiranje vršeno u ovom radu je pokazalo da za ovaj, konkretan problem, rešavanje heuristikom može biti pouzdano, ako se parametri heuristike podese na odgovarajući način.
 
 \addcontentsline{toc}{section}{Literatura}
 \appendix
